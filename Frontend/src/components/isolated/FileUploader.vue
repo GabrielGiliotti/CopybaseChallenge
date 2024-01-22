@@ -12,6 +12,8 @@ export default {
     }
   },
 
+  components: { FileItem },
+  
   computed: {
     computed: function() {
       return this.selectedFiles.some((file) => file.status == "uploading");
@@ -40,20 +42,24 @@ export default {
       });
     },
 
-    uploadSelectedFiles() {
-      this.selectedFiles.forEach((file: SelectedFile) => {
+    async uploadFile(file: any, event: any) {
+      console.log(event.target.loaded);
+      //file.percentage = Math.round((100 * event.loaded) / event.total);
+      file.percentage = 100;
+    },
+
+    uploadSelectedFiles(event: any) {
+      this.selectedFiles.forEach(async (file: SelectedFile) => {
       file.status = "uploading";
       file.percentage = 0;
 
-      // uploadFile(file.file, (event: any) => {
-      //   file.percentage = Math.round((100 * event.loaded) / event.total);
-      // })
-      //   .then((response) => {
-      //     file.status = "success";
-      //   })
-      //   .catch(() => {
-      //     file.status = "failed";
-      //   });
+      await this.uploadFile(file.file, event)
+        .then(() => {
+          file.status = "success";
+        })
+        .catch(() => {
+          file.status = "failed";
+        });
       });
     }
       
@@ -104,7 +110,7 @@ export default {
           class="button button-upload"
           :class="{ disabled: isUploading }"
           href="#"
-          @click.prevent="uploadSelectedFiles"
+          @click.prevent="uploadSelectedFiles($event)"
           v-if="selectedFiles.length"
           >Upload</a
         >
