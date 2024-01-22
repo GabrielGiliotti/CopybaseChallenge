@@ -9,4 +9,5 @@ export class ClientModel {
     valor: string
     'próximo ciclo': string
     'ID assinante': string
+    'valor mensal': number
 } 

@@ -35,6 +35,22 @@ export class MetricasController {
         const formatted = await this.fileRepository.formatArrayDate(sorted, 'data início');
         const arrayMonth = await this.fileRepository.formatDataByMonth(formatted);
 
+        // calcular MRR
+        arrayMonth.forEach(m => {
+            let receitaMensalTotal = 0; // Soma do valor mensal de cada customer
+            m.clients.ativos.forEach(c => receitaMensalTotal += c["valor mensal"]);
+
+            // como cada customer paga um valor unico, basta somar o valor mensal de cada um
+            // que ja temos o valor MRR para o mes
+
+            // porem faremos a receita media para cada mes, isso é, o total da receita
+            // dividido pelo numero de clientes ativos, dando uma visão melhor do valor
+            // medio recebido no mes por todos os clientes
+
+            const receitaMensalMedia = receitaMensalTotal / m.clients.ativos.length
+            m.mrr = Number(receitaMensalMedia.toFixed(2));
+        });
+
         return arrayMonth;
     }
 

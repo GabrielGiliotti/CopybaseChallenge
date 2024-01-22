@@ -23,7 +23,7 @@ export class FileRepository {
     async buildJson(fileBuffer: Buffer) {
         const csv = fileBuffer.toString();
         const array = csv.toString().split("\r");
-        const result = [];
+        const result = [] as ClientModel[];
         const headers = array[0].split(", ")
         
         for (let i = 1; i < array.length; i++) {
@@ -59,6 +59,16 @@ export class FileRepository {
         
             result.push(obj)
         }
+
+        result.forEach(c => {
+            c.valor = c.valor.replace(",", ".");
+
+            if(c['cobrada a cada X dias'] === "365") {
+                c['valor mensal'] = Number((parseFloat(c.valor) / 12).toFixed(2));
+            } else {
+                c['valor mensal'] = Number(parseFloat(c.valor).toFixed(2));
+            }
+        });
 
         this.formattedJson = result;
         return result;
@@ -96,84 +106,96 @@ export class FileRepository {
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Fevereiro",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Março",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Abril",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Maio",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Junho",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Julho",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Agosto",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Setembro",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Outubro",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Novembro",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
             {
                 month: "Dezembro",
                 clients: {
                     ativos: [],
                     cancelados: []
-                }
+                },
+                mrr: 0
             },
         ];
         
