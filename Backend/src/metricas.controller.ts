@@ -54,7 +54,17 @@ export class MetricasController {
             m.mrr = Number((receitaMensalMedia * m.clients.ativos.length).toFixed(2));
         });
 
-        return arrayMonth;
+        const chartedData = {
+            labels: [],
+            data: []
+        }
+
+        arrayMonth.forEach(m => {
+            chartedData.labels.push(m.month);
+            chartedData.data.push(m.mrr);
+        });
+
+        return chartedData;
     }
 
     @Get('churn-rate')

@@ -1,8 +1,9 @@
 <script lang="ts">
 import { ref } from "vue";
-//import { uploadFile } from "./api";
 import type { SelectedFile } from "../../types";
 import FileItem from "./FileItem.vue";
+
+const url = 'http://localhost:3000/metricas/';
 
 export default {
   data() {
@@ -43,21 +44,25 @@ export default {
       });
     },
 
+    async doRequest(url: string, method: string, headers: HeadersInit, body: BodyInit | null) {
+      const response = await fetch(url, {
+          method: method,
+          headers: headers,
+          body: body
+        });
+
+      const result = await response.json();
+      return result;
+    },
+
     async uploadFile(file: any) {      
-      //file.percentage = Math.round((100 * event.loaded) / event.total);
       try {
         let dataForm = new FormData();
         dataForm.append(`file`, file);
+        const body = dataForm; 
+        const headers = { 'Access-Control-Allow-Origin': '*' }
 
-        const response = await fetch('http://localhost:3000/metricas/upload', {
-          method: "POST",
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
-          body: dataForm
-        });
-
-        const result = await response.json();
+        const result = await this.doRequest(url + "upload", "POST", headers, body);
 
         if(result.status === 200) {
           this.message = "Upload de arquivo realizado com sucesso";
@@ -69,6 +74,9 @@ export default {
         setTimeout(() => {
           this.message = "";
         }, 5000);
+
+        const MRR = await this.doRequest(url + "mrr", "GET", headers, null);
+        this.$emit('metricaMRR', MRR);
 
       } catch (error) {
         console.error(error);
@@ -89,9 +97,9 @@ export default {
           file.status = "failed";
         });
       });
-    }
-      
-  }
+    }   
+  },
+  emits: ['metricaMRR']
 }
 </script>
 

@@ -2,14 +2,19 @@
     import SelecionarIngredientes from './SelecionarIngredientes.vue';
     import SuaLista from './SuaLista.vue';
     import MostrarReceitas from './MostrarReceitas.vue';
+    import type IMrrData from '@/interfaces/IMrrData';
+    import type { PropType } from 'vue';
 
     type Pagina = 'SelecionarIngredientes' | 'MostrarReceitas';
 
     export default {
+      props: {
+        mrrData: { type: Object as PropType<IMrrData> } 
+      },
       data() {
         return {
           ingredientes: [] as string[],
-          conteudo: 'SelecionarIngredientes' as Pagina
+          conteudo: 'SelecionarIngredientes' as Pagina,
         };
       },
       components: { SelecionarIngredientes, SuaLista, MostrarReceitas },
@@ -35,7 +40,8 @@
         <SelecionarIngredientes v-if="conteudo === 'SelecionarIngredientes'"
                                 @adicionar-ingrediente="adicionarIngrediente($event)"
                                 @remover-ingrediente="removerIngrediente($event)"
-                                @buscar-receitas="navegar('MostrarReceitas')"/>
+                                @buscar-receitas="navegar('MostrarReceitas')"
+                                :mrr-data="mrrData"/>
   
         <MostrarReceitas v-else-if="conteudo === 'MostrarReceitas'"
                          :ingredientes="ingredientes"

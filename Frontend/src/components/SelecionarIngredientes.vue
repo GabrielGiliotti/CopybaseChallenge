@@ -5,10 +5,14 @@
   import BotaoPrincipal from './BotaoPrincipal.vue';
   import BarChart from './isolated/BarChart.vue';
   import LineChart from './isolated/LineChart.vue';
+  import type IMrrData from '@/interfaces/IMrrData';
+  import type { PropType } from 'vue';
 
-    
   export default {
     name: 'SelecionarIngredientes',
+    props: {
+      mrrData: { type: Object as PropType<IMrrData> } 
+    },
     data() {
         return {
             categorias: [] as ICategoria[]
@@ -24,7 +28,7 @@
 
 <template>
     <section class="selecionar-ingredientes">
-      <BarChart />
+      <BarChart :mrr-data="mrrData"/>
       <br>
       <LineChart />
 
