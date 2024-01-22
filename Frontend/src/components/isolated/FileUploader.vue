@@ -8,7 +8,8 @@ export default {
   data() {
     return {
       selectedFiles: ref([] as SelectedFile[]),
-      isUploading: false
+      isUploading: false,
+      message: ""
     }
   },
 
@@ -42,22 +43,47 @@ export default {
       });
     },
 
-    async uploadFile(file: any, event: Event) {      
+    async uploadFile(file: any) {      
       //file.percentage = Math.round((100 * event.loaded) / event.total);
+      try {
+        let dataForm = new FormData();
+        dataForm.append(`file`, file);
+
+        const response = await fetch('http://localhost:3000/metricas/upload', {
+          method: "POST",
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
+          body: dataForm
+        });
+
+        const result = await response.json();
+
+        if(result.status === 200) {
+          this.message = "Upload de arquivo realizado com sucesso";
+        }
+        else if (result.status === 500) {
+          this.message = "Erro ao realizar Upload de arquivo";
+        }
+
+        setTimeout(() => {
+          this.message = "";
+        }, 5000);
+
+      } catch (error) {
+        console.error(error);
+      }
       file.percentage = 100;
     },
 
-    uploadSelectedFiles(event: Event) {
+    uploadSelectedFiles() {
       this.selectedFiles.forEach(async (file: SelectedFile) => {
       file.status = "uploading";
       file.percentage = 0;
 
-      await this.uploadFile(file.file, event)
+      await this.uploadFile(file.file)
         .then(() => {
           file.status = "success";
-          // fazer o fetch para o servidor aqui
-          // iniciar o backend
-          // Se nao rolar ate amanha, utilizar o express e entregar
         })
         .catch(() => {
           file.status = "failed";
@@ -112,10 +138,13 @@ export default {
           class="button button-upload"
           :class="{ disabled: isUploading }"
           href="#"
-          @click.prevent="uploadSelectedFiles($event)"
+          @click.prevent="uploadSelectedFiles"
           v-if="selectedFiles.length"
           >Upload</a
         >
+      </div>
+      <div v-if="message.length" class="files-list">
+        {{ message }}
       </div>
     </div>
   </main>

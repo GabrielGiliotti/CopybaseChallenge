@@ -11,7 +11,7 @@ export class MetricasController {
 
     private fileRepository = new FileRepository();
 
-    @Post('')
+    @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
     async fileProcessing(@UploadedFile(
         new ParseFilePipeBuilder()
@@ -20,11 +20,14 @@ export class MetricasController {
           .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY }),
     ) file: Express.Multer.File) {
         
-        this.fileRepository.saveFile(file);
-
-        const result = await this.fileRepository.buildJson(file.buffer);
-
-        return {message: 'Arquivo salvo com sucesso na memoria', file: result};
+        try {
+            this.fileRepository.saveFile(file);
+            const result = await this.fileRepository.buildJson(file.buffer);
+            return { message: 'Arquivo salvo com sucesso na memoria', file: result, status: 200 };
+        }
+        catch {
+            return { message: 'Erro ao fazer upload de arquivo', status: 500 };
+        }
     }
 
     @Get('mrr')
