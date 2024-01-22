@@ -48,7 +48,7 @@ export class MetricasController {
             // medio recebido no mes por todos os clientes
 
             const receitaMensalMedia = receitaMensalTotal / m.clients.ativos.length
-            m.mrr = Number(receitaMensalMedia.toFixed(2));
+            m.mrr = Number((receitaMensalMedia * m.clients.ativos.length).toFixed(2));
         });
 
         return arrayMonth;
