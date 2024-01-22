@@ -42,13 +42,12 @@ export default {
       });
     },
 
-    async uploadFile(file: any, event: any) {
-      console.log(event.target.loaded);
+    async uploadFile(file: any, event: Event) {      
       //file.percentage = Math.round((100 * event.loaded) / event.total);
       file.percentage = 100;
     },
 
-    uploadSelectedFiles(event: any) {
+    uploadSelectedFiles(event: Event) {
       this.selectedFiles.forEach(async (file: SelectedFile) => {
       file.status = "uploading";
       file.percentage = 0;
@@ -56,6 +55,9 @@ export default {
       await this.uploadFile(file.file, event)
         .then(() => {
           file.status = "success";
+          // fazer o fetch para o servidor aqui
+          // iniciar o backend
+          // Se nao rolar ate amanha, utilizar o express e entregar
         })
         .catch(() => {
           file.status = "failed";
