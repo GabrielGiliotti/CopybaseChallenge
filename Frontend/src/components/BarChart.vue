@@ -1,8 +1,9 @@
 <script lang="ts">
   import { Bar } from 'vue-chartjs'
-  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-  import type IMetricsData from '@/interfaces/IMetricsData';
-  import type { PropType } from 'vue';
+  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+  import { doRequest } from "../operacoes/fetchData";
+
+  const url = 'http://localhost:3000/metricas/';
 
   ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
   
@@ -12,9 +13,8 @@
     components: { Bar },
     
     props: {
-      mrrData: { type: Object as PropType<IMetricsData> },
       showData: { type: Boolean },
-      showButton: { type: Boolean }
+      showButtons: { type: Boolean },
     },
 
     data() {
@@ -52,18 +52,63 @@
     },
      
     methods: {
-      updateChartData() {
-        this.chartData.labels = this.mrrData?.labels as string[];
-        this.chartData.datasets[0].data = this.mrrData?.data as number[];
+      async resetChartData() {
+        return this.chartData = { 
+          labels: [] as string[],
+          datasets: [{
+            label: 'Monthly Recurring Revenue (MRR)',
+            data: [] as number[],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgba(255, 205, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+              'rgb(255, 99, 132)',
+              'rgb(255, 159, 64)',
+              'rgb(255, 205, 86)',
+              'rgb(75, 192, 192)',
+              'rgb(54, 162, 235)',
+              'rgb(153, 102, 255)',
+              'rgb(201, 203, 207)'
+            ],
+            borderWidth: 1
+          }]
+        }
+      },
+
+      async updateChartData(queryValue: number) {
+
+        this.chartData = await this.resetChartData();
+
+        const headers = { 'Access-Control-Allow-Origin': '*' };
+
+        const resultMRR = await doRequest(url + "mrr", "GET", headers, queryValue, null);
+
+        this.chartData.labels = resultMRR.labels;
+        this.chartData.datasets[0].data = resultMRR.data;
       }
     }
   }
 </script>
 
 <template>
-  <div class="buttons" @click="updateChartData()" v-if="showButton">
-    <label class="button">
-      MRR
+  <div class="buttons" v-if="showButtons">
+    <label class="button" @click="updateChartData(3)">
+      MRR 3 Meses
+    </label>
+    <label class="button" @click="updateChartData(6)">
+      MRR 6 Meses
+    </label>
+    <label class="button" @click="updateChartData(9)">
+      MRR 9 Meses
+    </label>
+    <label class="button" @click="updateChartData(12)">
+      MRR 12 Meses
     </label>
   </div>
   <br>

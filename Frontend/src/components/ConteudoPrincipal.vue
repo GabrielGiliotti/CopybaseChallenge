@@ -1,15 +1,11 @@
 <script lang="ts">
-    import type IMetricsData from '@/interfaces/IMetricsData';
-    import type { PropType } from 'vue';
     import BarChart from './BarChart.vue';
     import LineChart from './LineChart.vue';
 
     export default {
       
       props: {
-        mrrData: { type: Object as PropType<IMetricsData> },
-        churnData: { type: Object as PropType<IMetricsData> },
-        showButton: { type: Boolean }
+        showButtons: { type: Boolean }
       },
 
       data() {
@@ -19,8 +15,7 @@
         };
       },
 
-      components: { BarChart, LineChart },
-      
+      components: { BarChart, LineChart }
     }
 </script>
 
@@ -29,9 +24,9 @@
       <KeepAlive include="SelecionarIngredientes">
         
         <section class="selecionar-ingredientes">
-          <BarChart :mrrData="mrrData" :showData="showData" :showButton="showButton"/>
+          <BarChart :showData="showData" :showButtons="showButtons"/>
           <br>
-          <LineChart :churnData="churnData" :showData="showData" :showButton="showButton"/>
+          <LineChart :showData="showData" :showButtons="showButtons"/>
         </section>
 
       </KeepAlive>

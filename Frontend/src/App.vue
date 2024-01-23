@@ -13,15 +13,13 @@
       return {
         mrrData: {} as IMetricsData,
         churnData: {} as IMetricsData,
-        showButton: false
+        showButtons: false
       }
     },
     
     methods:{
       populateMrr(event: any){
-        this.mrrData = event.mrrData;
-        this.churnData = event.churnData;
-        this.showButton = true;
+        this.showButtons = event;
       }
     }
   }
@@ -29,8 +27,8 @@
 
 <template>
   <Banner />
-  <FileUploader @metrics="populateMrr($event)"/>
-  <ConteudoPrincipal :mrrData="mrrData" :churnData="churnData" :showButton="showButton"/>
+  <FileUploader @calculatedMetrics="populateMrr($event)"/>
+  <ConteudoPrincipal :showButtons="showButtons"/>
   <Rodape />
 </template>
 

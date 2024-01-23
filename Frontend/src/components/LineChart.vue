@@ -32,7 +32,7 @@
     props: {
       churnData: { type: Object as PropType<IMetricsData> },
       showData: { type: Boolean },
-      showButton: { type: Boolean }
+      showButtons: { type: Boolean }
     },
 
     data() {
@@ -81,7 +81,7 @@
 </script>
 
 <template>
-  <div class="buttons" @click="updateChartData()" v-if="showButton">
+  <div class="buttons" @click="updateChartData()" v-if="showButtons">
     <label class="button">
       Churn Rate
     </label>

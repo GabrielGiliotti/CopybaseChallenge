@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { Controller, Get, HttpStatus, ParseFilePipeBuilder, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, HttpStatus, ParseFilePipeBuilder, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { FileRepository } from "./file.repository";
 
@@ -31,7 +31,7 @@ export class MetricasController {
     }
 
     @Get('mrr')
-    async metricaMRR() {
+    async metricaMRR(@Query('months') months: number) {
 
         const array = await this.fileRepository.getJson();
         const sorted = await this.fileRepository.sortArray(array);
@@ -63,6 +63,17 @@ export class MetricasController {
             chartedData.labels.push(m.month);
             chartedData.data.push(m.mrr);
         });
+
+        if(months <= 3) {
+            chartedData.data.splice(3, chartedData.data.length-1);
+            chartedData.labels.splice(3, chartedData.labels.length-1);
+        } else if (months >= 4 && months <= 6) {
+            chartedData.data.splice(6, chartedData.data.length-1);
+            chartedData.labels.splice(6, chartedData.labels.length-1);
+        } else if (months >= 7 && months <= 9) {
+            chartedData.data.splice(9, chartedData.data.length-1);
+            chartedData.labels.splice(9, chartedData.labels.length-1);
+        }
 
         return chartedData;
     }

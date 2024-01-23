@@ -2,6 +2,8 @@
 import { ref } from "vue";
 import type { ISelectedFile } from "../interfaces/ISelectedFile";
 import FileItem from "./FileItem.vue";
+import { doRequest } from "../operacoes/fetchData";
+
 
 const url = 'http://localhost:3000/metricas/';
 
@@ -44,25 +46,15 @@ export default {
       });
     },
 
-    async doRequest(url: string, method: string, headers: HeadersInit, body: BodyInit | null) {
-      const response = await fetch(url, {
-          method: method,
-          headers: headers,
-          body: body
-        });
-
-      const result = await response.json();
-      return result;
-    },
-
-    async uploadFile(file: any) {      
+    async uploadFile(file: any, months: number = 12) {      
       try {
         let dataForm = new FormData();
         dataForm.append(`file`, file);
         const body = dataForm; 
-        const headers = { 'Access-Control-Allow-Origin': '*' }
+        const headers = { 'Access-Control-Allow-Origin': '*' };
+        const query = months;
 
-        const result = await this.doRequest(url + "upload", "POST", headers, body);
+        const result = await doRequest(url + "upload", "POST", headers, 0, body);
 
         if(result.status === 200) {
           this.message = "Upload de arquivo realizado com sucesso";
@@ -75,15 +67,7 @@ export default {
           this.message = "";
         }, 5000);
 
-        const MRR = await this.doRequest(url + "mrr", "GET", headers, null);
-        const churnRate = await this.doRequest(url + "churn-rate", "GET", headers, null);
-
-        const metricsData = {
-          mrrData: MRR,
-          churnData: churnRate
-        }
-
-        this.$emit('metrics', metricsData);
+        this.$emit('calculatedMetrics', true);
 
       } catch (error) {
         console.error(error);
@@ -107,7 +91,7 @@ export default {
     }   
   },
   
-  emits: ['metrics']
+  emits: ['calculatedMetrics']
 }
 </script>
 
