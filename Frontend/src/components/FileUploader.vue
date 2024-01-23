@@ -1,9 +1,7 @@
 <script lang="ts">
 import { ref } from "vue";
 import type { ISelectedFile } from "../interfaces/ISelectedFile";
-import FileItem from "./FileItem.vue";
 import { doRequest } from "../operacoes/fetchData";
-
 
 const url = 'http://localhost:3000/metricas/';
 
@@ -15,8 +13,6 @@ export default {
       message: ""
     }
   },
-
-  components: { FileItem },
   
   computed: {
     computed: function() {
@@ -25,34 +21,46 @@ export default {
   },
 
   methods: {
-    clearFiles () {
+    async clearFiles () {
       this.selectedFiles = []
     },
 
-    onSelectFiles(event: Event) {
+    async onSelectFiles(event: Event) {
       const target = event.target as HTMLInputElement;
       if (target.files === null) {
         return;
       }
 
-      this.clearFiles();
+      await this.clearFiles();
 
       Array.from(target.files).forEach((file: File) => {
         this.selectedFiles.push({
           file: file,
-          percentage: 0,
-          status: "pending",
         } as ISelectedFile);
       });
     },
 
-    async uploadFile(file: any, months: number = 12) {      
+    async uploadSelectedFiles() {
+      this.selectedFiles.forEach(async (file: ISelectedFile) => {
+      file.status = "uploading";
+      file.percentage = 0;
+
+      await this.uploadFile(file.file)
+        .then(() => {
+          file.status = "success";
+        })
+        .catch(() => {
+          file.status = "failed";
+        });
+      });
+    }, 
+
+    async uploadFile(file: any) {      
       try {
         let dataForm = new FormData();
         dataForm.append(`file`, file);
         const body = dataForm; 
         const headers = { 'Access-Control-Allow-Origin': '*' };
-        const query = months;
 
         const result = await doRequest(url + "upload", "POST", headers, 0, body);
 
@@ -72,23 +80,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
-      file.percentage = 100;
-    },
-
-    uploadSelectedFiles() {
-      this.selectedFiles.forEach(async (file: ISelectedFile) => {
-      file.status = "uploading";
-      file.percentage = 0;
-
-      await this.uploadFile(file.file)
-        .then(() => {
-          file.status = "success";
-        })
-        .catch(() => {
-          file.status = "failed";
-        });
-      });
-    }   
+    },  
   },
   
   emits: ['calculatedMetrics']
@@ -101,12 +93,7 @@ export default {
       <!-- Files list -->
       <div class="files-list">
         <b v-if="selectedFiles.length">Files ({{ selectedFiles.length }}):</b>
-        <!-- File item -->
-        <FileItem
-          v-for="file in selectedFiles"
-          :key="file.file.name"
-          :file="file"
-        />
+        <span v-if="selectedFiles.length">{{ selectedFiles[0].file.name }}</span>
       </div>
       <!-- Hidden file input -->
       <input
