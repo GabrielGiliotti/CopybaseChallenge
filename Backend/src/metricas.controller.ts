@@ -35,23 +35,16 @@ export class MetricasController {
 
         const array = await this.fileRepository.getJson();
         const sorted = await this.fileRepository.sortArray(array);
-        const formatted = await this.fileRepository.formatArrayDate(sorted, 'data início');
-        const arrayMonth = await this.fileRepository.formatDataByMonth(formatted);
+        
+        const arrayMonth = await this.fileRepository.formatDataByMonth(sorted);
 
-        // calcular MRR
+        // Calcula MRR
         arrayMonth.forEach(m => {
             let receitaMensalTotal = 0; // Soma do valor mensal de cada customer
-            m.clients.ativos.forEach(c => receitaMensalTotal += c["valor mensal"]);
-
-            // como cada customer paga um valor unico, basta somar o valor mensal de cada um
-            // que ja temos o valor MRR para o mes
-
-            // porem faremos a receita media para cada mes, isso é, o total da receita
-            // dividido pelo numero de clientes ativos, dando uma visão melhor do valor
-            // medio recebido no mes por todos os clientes
-
-            const receitaMensalMedia = receitaMensalTotal / m.clients.ativos.length
-            m.mrr = Number((receitaMensalMedia * m.clients.ativos.length).toFixed(2));
+            m.clients.ativos.ano2022.forEach(c => {
+                receitaMensalTotal += c.valorMensal;
+            });
+            m.mrr = Number((receitaMensalTotal * m.clients.ativos.ano2022.length).toFixed(2));
         });
 
         const chartedData = {
@@ -63,6 +56,8 @@ export class MetricasController {
             chartedData.labels.push(m.month);
             chartedData.data.push(m.mrr);
         });
+
+        //console.log(chartedData.data);
 
         if(months <= 3) {
             chartedData.data.splice(3, chartedData.data.length-1);
@@ -81,6 +76,26 @@ export class MetricasController {
     @Get('churn-rate')
     async metricaChurnRate() {
 
-        return this.fileRepository.getFile();
+        const array = await this.fileRepository.getJson();
+        const sorted = await this.fileRepository.sortArray(array);
+        const arrayMonth = await this.fileRepository.formatDataByMonth(sorted);
+
+        // Calculo Churn Rate
+        arrayMonth.forEach(m => {
+            const churn = m.clients.cancelados.ano2022.length / m.clients.ativos.ano2022.length;
+            m.churnRate = Number((churn * 100).toFixed(2));
+        });
+
+        const chartedData = {
+            labels: [],
+            data: []
+        }
+
+        arrayMonth.forEach(m => {
+            chartedData.labels.push(m.month);
+            chartedData.data.push(m.churnRate);
+        });
+
+        return chartedData;
     }
 }

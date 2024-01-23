@@ -41,7 +41,7 @@
           labels: [] as string[],
           datasets: [{
             axis: 'y',
-            label: 'Monthly Churn Rate (%)',
+            label: 'Monthly Churn Rate (%) - 2022',
             data: [] as number[],
             fill: false,
             backgroundColor: [

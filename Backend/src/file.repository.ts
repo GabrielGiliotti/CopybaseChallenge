@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { AtivosCancelados, ChartModel, Clients } from './chart.model';
 import { ClientModel } from './client.model';
 
 export class FileRepository {
@@ -64,9 +65,9 @@ export class FileRepository {
             c.valor = c.valor.replace(",", ".");
 
             if(c['cobrada a cada X dias'] === "365") {
-                c['valor mensal'] = Number((parseFloat(c.valor) / 12).toFixed(2));
+                c.valorMensal = Number((parseFloat(c.valor) / 12).toFixed(2));
             } else {
-                c['valor mensal'] = Number(parseFloat(c.valor).toFixed(2));
+                c.valorMensal = Number(parseFloat(c.valor).toFixed(2));
             }
         });
 
@@ -86,147 +87,101 @@ export class FileRepository {
         return array;
     }
 
-    async formatArrayDate(array: ClientModel[], property: string) {
-        array.forEach(client => {
-            if(client[property].length > 0) {
-                const mes = client[property].split("/")[0]
-                const dia = client[property].split("/")[1];
-                const ano = client[property].split("/")[2];
-                client[property] = dia + '/' + mes + '/' + ano;
-            }
-        });
-        return array;
-    }
-
     async formatDataByMonth(array: ClientModel[]) {
         
-        const arrayMonth = [
-            {
-                month: "Janeiro",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Fevereiro",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Março",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Abril",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Maio",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Junho",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Julho",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Agosto",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Setembro",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Outubro",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Novembro",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-            {
-                month: "Dezembro",
-                clients: {
-                    ativos: [],
-                    cancelados: []
-                },
-                mrr: 0
-            },
-        ];
-        
+        const arrayMonth = new Array<ChartModel>();
+        const monthName = [
+            'Janeiro', 
+            'Fevereiro', 
+            'Março', 
+            'Abril', 
+            'Maio', 
+            'Junho',
+            'Julho',
+            'Agosto',
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro'
+        ]
+
+        let i = 0;
+
+        while(i < 12) {
+            const month = new ChartModel();
+            month.month = monthName[i];
+            month.mrr = 0;
+            month.churnRate = 0;
+            month.clients = new Clients();
+            month.clients.ativos = new AtivosCancelados();
+            month.clients.ativos.ano2022 = new Array<ClientModel>();
+            month.clients.ativos.ano2023 = new Array<ClientModel>();
+            month.clients.cancelados = new AtivosCancelados();
+            month.clients.cancelados.ano2022 = new Array<ClientModel>();
+            month.clients.cancelados.ano2023 = new Array<ClientModel>();
+            arrayMonth.push(month);
+            i++;
+        }
+                
         array.forEach(e => {
-            const month = e["data início"].split("/")[1];
-            if(e.status === "Ativa") {
-                if(month === "1") arrayMonth[0].clients.ativos.push(e);
-                if(month === "2") arrayMonth[1].clients.ativos.push(e);
-                if(month === "3") arrayMonth[2].clients.ativos.push(e);
-                if(month === "4") arrayMonth[3].clients.ativos.push(e);
-                if(month === "5") arrayMonth[4].clients.ativos.push(e);
-                if(month === "6") arrayMonth[5].clients.ativos.push(e);
-                if(month === "7") arrayMonth[6].clients.ativos.push(e);
-                if(month === "8") arrayMonth[7].clients.ativos.push(e);
-                if(month === "9") arrayMonth[8].clients.ativos.push(e);
-                if(month === "10") arrayMonth[9].clients.ativos.push(e);
-                if(month === "11") arrayMonth[10].clients.ativos.push(e);
-                if(month === "12") arrayMonth[11].clients.ativos.push(e);
-            } else {
-                if(month === "1") arrayMonth[0].clients.cancelados.push(e);
-                if(month === "2") arrayMonth[1].clients.cancelados.push(e);
-                if(month === "3") arrayMonth[2].clients.cancelados.push(e);
-                if(month === "4") arrayMonth[3].clients.cancelados.push(e);
-                if(month === "5") arrayMonth[4].clients.cancelados.push(e);
-                if(month === "6") arrayMonth[5].clients.cancelados.push(e);
-                if(month === "7") arrayMonth[6].clients.cancelados.push(e);
-                if(month === "8") arrayMonth[7].clients.cancelados.push(e);
-                if(month === "9") arrayMonth[8].clients.cancelados.push(e);
-                if(month === "10") arrayMonth[9].clients.cancelados.push(e);
-                if(month === "11") arrayMonth[10].clients.cancelados.push(e);
-                if(month === "12") arrayMonth[11].clients.cancelados.push(e);
+
+            const date = new Date(e['data início']);
+
+            const month = date.getMonth();
+            const year = date.getFullYear();
+
+            if (e.status === "Ativa" && year === 2022) {
+                if(month === 0) arrayMonth[0].clients.ativos.ano2022.push(e);
+                if(month === 1) arrayMonth[1].clients.ativos.ano2022.push(e);
+                if(month === 2) arrayMonth[2].clients.ativos.ano2022.push(e);
+                if(month === 3) arrayMonth[3].clients.ativos.ano2022.push(e);
+                if(month === 4) arrayMonth[4].clients.ativos.ano2022.push(e);
+                if(month === 5) arrayMonth[5].clients.ativos.ano2022.push(e);
+                if(month === 6) arrayMonth[6].clients.ativos.ano2022.push(e);
+                if(month === 7) arrayMonth[7].clients.ativos.ano2022.push(e);
+                if(month === 8) arrayMonth[8].clients.ativos.ano2022.push(e);
+                if(month === 9) arrayMonth[9].clients.ativos.ano2022.push(e);
+                if(month === 10) arrayMonth[10].clients.ativos.ano2022.push(e);
+                if(month === 11) arrayMonth[11].clients.ativos.ano2022.push(e);
+            } else if (e.status === "Ativa" && year === 2023) {
+                if(month === 0) arrayMonth[0].clients.ativos.ano2023.push(e);
+                if(month === 1) arrayMonth[1].clients.ativos.ano2023.push(e);
+                if(month === 2) arrayMonth[2].clients.ativos.ano2023.push(e);
+                if(month === 3) arrayMonth[3].clients.ativos.ano2023.push(e);
+                if(month === 4) arrayMonth[4].clients.ativos.ano2023.push(e);
+                if(month === 5) arrayMonth[5].clients.ativos.ano2023.push(e);
+                if(month === 6) arrayMonth[6].clients.ativos.ano2023.push(e);
+                if(month === 7) arrayMonth[7].clients.ativos.ano2023.push(e);
+                if(month === 8) arrayMonth[8].clients.ativos.ano2023.push(e);
+                if(month === 9) arrayMonth[9].clients.ativos.ano2023.push(e);
+                if(month === 10) arrayMonth[10].clients.ativos.ano2023.push(e);
+                if(month === 11) arrayMonth[11].clients.ativos.ano2023.push(e);
+            } else if (e.status === "Cancelada" && year === 2022) {
+                if(month === 0) arrayMonth[0].clients.cancelados.ano2022.push(e);
+                if(month === 1) arrayMonth[1].clients.cancelados.ano2022.push(e);
+                if(month === 2) arrayMonth[2].clients.cancelados.ano2022.push(e);
+                if(month === 3) arrayMonth[3].clients.cancelados.ano2022.push(e);
+                if(month === 4) arrayMonth[4].clients.cancelados.ano2022.push(e);
+                if(month === 5) arrayMonth[5].clients.cancelados.ano2022.push(e);
+                if(month === 6) arrayMonth[6].clients.cancelados.ano2022.push(e);
+                if(month === 7) arrayMonth[7].clients.cancelados.ano2022.push(e);
+                if(month === 8) arrayMonth[8].clients.cancelados.ano2022.push(e);
+                if(month === 9) arrayMonth[9].clients.cancelados.ano2022.push(e);
+                if(month === 10) arrayMonth[10].clients.cancelados.ano2022.push(e);
+                if(month === 11) arrayMonth[11].clients.cancelados.ano2022.push(e);
+            } else if (e.status === "Cancelada" && year === 2023) {
+                if(month === 0) arrayMonth[0].clients.cancelados.ano2023.push(e);
+                if(month === 1) arrayMonth[1].clients.cancelados.ano2023.push(e);
+                if(month === 2) arrayMonth[2].clients.cancelados.ano2023.push(e);
+                if(month === 3) arrayMonth[3].clients.cancelados.ano2023.push(e);
+                if(month === 4) arrayMonth[4].clients.cancelados.ano2023.push(e);
+                if(month === 5) arrayMonth[5].clients.cancelados.ano2023.push(e);
+                if(month === 6) arrayMonth[6].clients.cancelados.ano2023.push(e);
+                if(month === 7) arrayMonth[7].clients.cancelados.ano2023.push(e);
+                if(month === 8) arrayMonth[8].clients.cancelados.ano2023.push(e);
+                if(month === 9) arrayMonth[9].clients.cancelados.ano2023.push(e);
+                if(month === 10) arrayMonth[10].clients.cancelados.ano2023.push(e);
+                if(month === 11) arrayMonth[11].clients.cancelados.ano2023.push(e);
             }
         });
 
