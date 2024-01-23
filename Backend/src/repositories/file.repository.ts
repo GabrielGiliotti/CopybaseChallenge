@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { AtivosCancelados, ChartModel, Clients } from './chart.model';
-import { ClientModel } from './client.model';
+import { AtivosCancelados, ChartModel, Clients } from '../models/chart.model';
+import { ClientModel } from '../models/client.model';
 
 export class FileRepository {
     private file: any

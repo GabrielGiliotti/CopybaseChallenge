@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { MetricasController } from './metricas.controller';
+import { MetricasController } from './controllers/metricas.controller';
 
 @Module({
   imports: [],
