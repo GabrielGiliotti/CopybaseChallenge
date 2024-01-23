@@ -76,7 +76,14 @@ export default {
         }, 5000);
 
         const MRR = await this.doRequest(url + "mrr", "GET", headers, null);
-        this.$emit('metricaMRR', MRR);
+        const churnRate = await this.doRequest(url + "churn-rate", "GET", headers, null);
+
+        const metricsData = {
+          mrrData: MRR,
+          churnData: churnRate
+        }
+
+        this.$emit('metrics', metricsData);
 
       } catch (error) {
         console.error(error);
@@ -100,7 +107,7 @@ export default {
     }   
   },
   
-  emits: ['metricaMRR']
+  emits: ['metrics']
 }
 </script>
 

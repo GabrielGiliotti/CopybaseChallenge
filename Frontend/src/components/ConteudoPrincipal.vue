@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type IMrrData from '@/interfaces/IMrrData';
+    import type IMetricsData from '@/interfaces/IMetricsData';
     import type { PropType } from 'vue';
     import BarChart from './BarChart.vue';
     import LineChart from './LineChart.vue';
@@ -7,7 +7,8 @@
     export default {
       
       props: {
-        mrrData: { type: Object as PropType<IMrrData> },
+        mrrData: { type: Object as PropType<IMetricsData> },
+        churnData: { type: Object as PropType<IMetricsData> },
         showButton: { type: Boolean }
       },
 
@@ -30,7 +31,7 @@
         <section class="selecionar-ingredientes">
           <BarChart :mrrData="mrrData" :showData="showData" :showButton="showButton"/>
           <br>
-          <LineChart />
+          <LineChart :churnData="churnData" :showData="showData" :showButton="showButton"/>
         </section>
 
       </KeepAlive>

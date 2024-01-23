@@ -3,7 +3,7 @@
   import ConteudoPrincipal from './components/ConteudoPrincipal.vue';
   import Rodape from './components/Rodape.vue';
   import FileUploader from './components/FileUploader.vue';
-  import type IMrrData from './interfaces/IMrrData';
+  import type IMetricsData from '@/interfaces/IMetricsData';
 
   export default {
 
@@ -11,14 +11,16 @@
 
     data() {
       return {
-        mrrData: {} as IMrrData,
+        mrrData: {} as IMetricsData,
+        churnData: {} as IMetricsData,
         showButton: false
       }
     },
     
     methods:{
-      populateMrr(event: IMrrData){
-        this.mrrData = event;
+      populateMrr(event: any){
+        this.mrrData = event.mrrData;
+        this.churnData = event.churnData;
         this.showButton = true;
       }
     }
@@ -27,8 +29,8 @@
 
 <template>
   <Banner />
-  <FileUploader @metrica-m-r-r="populateMrr($event)"/>
-  <ConteudoPrincipal :mrrData="mrrData" :showButton="showButton"/>
+  <FileUploader @metrics="populateMrr($event)"/>
+  <ConteudoPrincipal :mrrData="mrrData" :churnData="churnData" :showButton="showButton"/>
   <Rodape />
 </template>
 

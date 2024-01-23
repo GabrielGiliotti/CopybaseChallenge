@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Bar } from 'vue-chartjs'
-  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, type ChartData } from 'chart.js'
-  import type IMrrData from '@/interfaces/IMrrData';
+  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+  import type IMetricsData from '@/interfaces/IMetricsData';
   import type { PropType } from 'vue';
 
   ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
@@ -12,7 +12,7 @@
     components: { Bar },
     
     props: {
-      mrrData: { type: Object as PropType<IMrrData> },
+      mrrData: { type: Object as PropType<IMetricsData> },
       showData: { type: Boolean },
       showButton: { type: Boolean }
     },

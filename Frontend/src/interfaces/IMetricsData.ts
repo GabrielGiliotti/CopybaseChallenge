@@ -1,4 +1,4 @@
-export default interface IMrrData {
+export default interface IMetricsData {
     labels: string[],
     data: number[]
 }
