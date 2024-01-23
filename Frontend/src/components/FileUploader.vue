@@ -188,7 +188,7 @@ export default {
 
   width: fit-content;
   padding: 0.5rem 1rem;
-  border-radius: 2px;
+  border-radius: 10px;
 
   &:hover {
     background: #8b34f5;
