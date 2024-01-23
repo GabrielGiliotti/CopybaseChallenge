@@ -1,9 +1,8 @@
 <script lang="ts">
-  import type { PropType } from 'vue';
   import Banner from './components/Banner.vue';
   import ConteudoPrincipal from './components/ConteudoPrincipal.vue';
   import Rodape from './components/Rodape.vue';
-  import FileUploader from './components/isolated/FileUploader.vue';
+  import FileUploader from './components/FileUploader.vue';
   import type IMrrData from './interfaces/IMrrData';
 
   export default {
@@ -12,13 +11,15 @@
 
     data() {
       return {
-        mrrData: {} as IMrrData
+        mrrData: {} as IMrrData,
+        showButton: false
       }
     },
     
     methods:{
       populateMrr(event: IMrrData){
         this.mrrData = event;
+        this.showButton = true;
       }
     }
   }
@@ -27,7 +28,7 @@
 <template>
   <Banner />
   <FileUploader @metrica-m-r-r="populateMrr($event)"/>
-  <ConteudoPrincipal :mrr-data="mrrData"/>
+  <ConteudoPrincipal :mrrData="mrrData" :showButton="showButton"/>
   <Rodape />
 </template>
 

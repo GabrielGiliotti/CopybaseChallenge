@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import type { SelectedFile } from "../../types";
+  import type { ISelectedFile } from "../interfaces/ISelectedFile";
   import ProgressBar from "./ProgressBar.vue";
 
   defineProps<{
-    file: SelectedFile;
+    file: ISelectedFile;
   }>();
 </script>
 

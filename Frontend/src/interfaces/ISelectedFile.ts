@@ -1,6 +1,6 @@
 export type UploadingStatus = "pending" | "uploading" | "failed" | "success";
 
-export interface SelectedFile {
+export interface ISelectedFile {
   file: File;
   percentage: number;
   status: UploadingStatus;

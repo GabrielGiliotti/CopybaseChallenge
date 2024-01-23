@@ -1,6 +1,6 @@
 <script lang="ts">
 import { ref } from "vue";
-import type { SelectedFile } from "../../types";
+import type { ISelectedFile } from "../interfaces/ISelectedFile";
 import FileItem from "./FileItem.vue";
 
 const url = 'http://localhost:3000/metricas/';
@@ -8,7 +8,7 @@ const url = 'http://localhost:3000/metricas/';
 export default {
   data() {
     return {
-      selectedFiles: ref([] as SelectedFile[]),
+      selectedFiles: ref([] as ISelectedFile[]),
       isUploading: false,
       message: ""
     }
@@ -40,7 +40,7 @@ export default {
           file: file,
           percentage: 0,
           status: "pending",
-        } as SelectedFile);
+        } as ISelectedFile);
       });
     },
 
@@ -85,7 +85,7 @@ export default {
     },
 
     uploadSelectedFiles() {
-      this.selectedFiles.forEach(async (file: SelectedFile) => {
+      this.selectedFiles.forEach(async (file: ISelectedFile) => {
       file.status = "uploading";
       file.percentage = 0;
 
@@ -99,6 +99,7 @@ export default {
       });
     }   
   },
+  
   emits: ['metricaMRR']
 }
 </script>

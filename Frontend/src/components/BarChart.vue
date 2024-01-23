@@ -8,18 +8,22 @@
   
   export default {
     name: 'BarChart',
+
     components: { Bar },
+    
     props: {
-      mrrData: { type: Object as PropType<IMrrData> }
+      mrrData: { type: Object as PropType<IMrrData> },
+      showData: { type: Boolean },
+      showButton: { type: Boolean }
     },
 
     data() {
       return {
         chartData: {
-          labels: this.mrrData?.labels || [],
+          labels: [] as string[],
           datasets: [{
             label: 'Monthly Recurring Revenue (MRR)',
-            data: this.mrrData?.data || [],
+            data: [] as number[],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(255, 159, 64, 0.2)',
@@ -45,14 +49,26 @@
           responsive: true,
         },
       }
+    },
+     
+    methods: {
+      updateChartData() {
+        this.chartData.labels = this.mrrData?.labels as string[];
+        this.chartData.datasets[0].data = this.mrrData?.data as number[];
+      }
     }
   }
 </script>
 
 <template>
-  <div class="wrapper">
-    <Bar id="my-chart-id"
-         :options="chartOptions"
+  <div class="buttons" @click="updateChartData()" v-if="showButton">
+    <label class="button">
+      MRR
+    </label>
+  </div>
+  <br>
+  <div class="wrapper" v-if="chartData.datasets[0].data.length">
+    <Bar :options="chartOptions"
          :data="chartData"/>
   </div>
 </template>
@@ -71,4 +87,36 @@
   gap: 1rem;
   background-color: white;
 }
+
+.buttons {
+  text-align: center;
+  display: flex;
+  gap: 1rem;
+
+  &.centered {
+    justify-content: center;
+  }
+}
+
+.button {
+  cursor: pointer;
+
+  color: white;
+  background: #a886d9;
+  text-decoration: none;
+
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+
+  &:hover {
+    background: #8b34f5;
+  }
+  &.disabled {
+    cursor: default;
+    background: lightgray;
+    pointer-events: none;
+  }
+}
+
 </style>
