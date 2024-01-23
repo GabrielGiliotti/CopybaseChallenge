@@ -22,7 +22,7 @@
         chartData: {
           labels: [] as string[],
           datasets: [{
-            label: 'Monthly Recurring Revenue (MRR) - 2022',
+            label: 'Monthly Recurring Revenue (MRR) - 2022 - em R$',
             data: [] as number[],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -56,7 +56,7 @@
         return this.chartData = { 
           labels: [] as string[],
           datasets: [{
-            label: 'Monthly Recurring Revenue (MRR)',
+            label: 'Monthly Recurring Revenue (MRR) - 2022 - em R$',
             data: [] as number[],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -97,28 +97,49 @@
 </script>
 
 <template>
-  <div class="buttons" v-if="showButtons">
-    <label class="button" @click="updateChartData(3)">
-      MRR 3 Meses
-    </label>
-    <label class="button" @click="updateChartData(6)">
-      MRR 6 Meses
-    </label>
-    <label class="button" @click="updateChartData(9)">
-      MRR 9 Meses
-    </label>
-    <label class="button" @click="updateChartData(12)">
-      MRR 12 Meses
-    </label>
-  </div>
-  <br>
-  <div class="wrapper" v-if="chartData.datasets[0].data.length">
-    <Bar :options="chartOptions"
-         :data="chartData"/>
+  <div class="borda-geral">
+    <div class="buttons">
+      <button class="button" :disabled='!showButtons' @click="updateChartData(3)" >
+          MRR 3 Meses 
+      </button>
+      <button class="button" :disabled='!showButtons' @click="updateChartData(6)" >
+          MRR 6 Meses 
+      </button>
+      <button class="button" :disabled='!showButtons' @click="updateChartData(9)" >
+          MRR 9 Meses 
+      </button>
+      <button class="button" :disabled='!showButtons' @click="updateChartData(12)" >
+          MRR 12 Meses 
+      </button>
+    </div>
+    <br>
+    <div class="wrapper" v-if="chartData.datasets[0].data.length">
+      <Bar :options="chartOptions"
+           :data="chartData"/>
+      <div>
+        * Cada assinante paga um valor diferente para seu serviço, logo MRR é a soma total do pagamento de cada assinante
+      </div>
+    </div>
+    <div v-else>
+      Grafico de <strong>Barras</strong>
+    </div>
   </div>
 </template>
 
 <style scoped>
+
+.borda-geral {
+  border: 1px dashed black;
+  border-radius: 0.5rem;
+  text-align: center;
+  margin: auto;
+  width: 900px;
+  padding: 2rem;
+  flex-direction: column;
+  display: flex;
+  gap: 1rem;
+  background-color: white;
+}
 
 .wrapper {  
   border: 1px dashed lightgray;
@@ -137,7 +158,7 @@
   text-align: center;
   display: flex;
   gap: 1rem;
-
+  margin-left: 15%;
   &.centered {
     justify-content: center;
   }
@@ -152,7 +173,7 @@
 
   width: fit-content;
   padding: 0.5rem 1rem;
-  border-radius: 2px;
+  border-radius: 10px;
 
   &:hover {
     background: #8b34f5;

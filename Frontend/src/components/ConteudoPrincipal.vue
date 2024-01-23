@@ -21,21 +21,25 @@
 
 <template>
     <main class="conteudo-principal">
-      <KeepAlive include="SelecionarIngredientes">
         
-        <section class="selecionar-ingredientes">
+        <section class="charts-template">
           <BarChart :showData="showData" :showButtons="showButtons"/>
+          <br>
+          <div class="hr"></div>
           <br>
           <LineChart :showData="showData" :showButtons="showButtons"/>
         </section>
 
-      </KeepAlive>
     </main>
 </template>
 
 <style scoped>
-
-.selecionar-ingredientes {
+.hr {
+  width: 100%;
+  height: 1px;
+  background-color: rgb(112, 63, 228);
+}
+.charts-template {
   display: flex;
   flex-direction: column;
   align-items: center;
