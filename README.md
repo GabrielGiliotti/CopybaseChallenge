@@ -1,13 +1,14 @@
 # Copybase Challenge
 
-Desafio de exibição de métricas de negócio em gráficos.
+Desafio de exibição de métricas de negócio em gráficos.  
 Pré-requisitos: Ter o ambiente ```Node.js``` previamente instalado.  
 
 Frameworks/bibliotecas principais:
 
 ```Vue.js e Charts.js (Frontend)```    
-
 ```Nest.js (Backend)```  
+
+Todos os comandos a seguir pressupõem que o repositório ja foi clonado ou baixado como ZIP para a máquina local. (Caso necessário, procure por ```git clone como fazer``` na web).
 
 ## Frontend
 
@@ -15,9 +16,7 @@ Frameworks/bibliotecas principais:
 
 ## Backend
 
-Para executar o projeto localmente, primeiro baixe ou clone o repositório em sua máquina local. 
-
-Em seguida, acesse o diretório acesse o diretório ```Backend``` via terminal execute o comando de instalação das dependencias do projeto.
+Primeiro, acesse o diretório ```Backend``` via terminal ou prompt de comando e execute o comando de instalação das dependencias do projeto.
 
 ```npm i``` ou ```npm install```
 
