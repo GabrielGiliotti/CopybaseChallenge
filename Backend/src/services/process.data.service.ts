@@ -198,57 +198,13 @@ export class ProcessDataService {
             const year = date.getFullYear();
 
             if (this.statusAtivo.includes(e.status) && year === 2022) {
-                if(month === 0) arrayMonth[0].clients.ativos.ano2022.push(e);
-                if(month === 1) arrayMonth[1].clients.ativos.ano2022.push(e);
-                if(month === 2) arrayMonth[2].clients.ativos.ano2022.push(e);
-                if(month === 3) arrayMonth[3].clients.ativos.ano2022.push(e);
-                if(month === 4) arrayMonth[4].clients.ativos.ano2022.push(e);
-                if(month === 5) arrayMonth[5].clients.ativos.ano2022.push(e);
-                if(month === 6) arrayMonth[6].clients.ativos.ano2022.push(e);
-                if(month === 7) arrayMonth[7].clients.ativos.ano2022.push(e);
-                if(month === 8) arrayMonth[8].clients.ativos.ano2022.push(e);
-                if(month === 9) arrayMonth[9].clients.ativos.ano2022.push(e);
-                if(month === 10) arrayMonth[10].clients.ativos.ano2022.push(e);
-                if(month === 11) arrayMonth[11].clients.ativos.ano2022.push(e);
+                arrayMonth[month].clients.ativos.ano2022.push(e);
             } else if (this.statusAtivo.includes(e.status) && year === 2023) {
-                if(month === 0) arrayMonth[0].clients.ativos.ano2023.push(e);
-                if(month === 1) arrayMonth[1].clients.ativos.ano2023.push(e);
-                if(month === 2) arrayMonth[2].clients.ativos.ano2023.push(e);
-                if(month === 3) arrayMonth[3].clients.ativos.ano2023.push(e);
-                if(month === 4) arrayMonth[4].clients.ativos.ano2023.push(e);
-                if(month === 5) arrayMonth[5].clients.ativos.ano2023.push(e);
-                if(month === 6) arrayMonth[6].clients.ativos.ano2023.push(e);
-                if(month === 7) arrayMonth[7].clients.ativos.ano2023.push(e);
-                if(month === 8) arrayMonth[8].clients.ativos.ano2023.push(e);
-                if(month === 9) arrayMonth[9].clients.ativos.ano2023.push(e);
-                if(month === 10) arrayMonth[10].clients.ativos.ano2023.push(e);
-                if(month === 11) arrayMonth[11].clients.ativos.ano2023.push(e);
+                arrayMonth[month].clients.ativos.ano2023.push(e);
             } else if (this.statusCancelado.includes(e.status) && year === 2022) {
-                if(month === 0) arrayMonth[0].clients.cancelados.ano2022.push(e);
-                if(month === 1) arrayMonth[1].clients.cancelados.ano2022.push(e);
-                if(month === 2) arrayMonth[2].clients.cancelados.ano2022.push(e);
-                if(month === 3) arrayMonth[3].clients.cancelados.ano2022.push(e);
-                if(month === 4) arrayMonth[4].clients.cancelados.ano2022.push(e);
-                if(month === 5) arrayMonth[5].clients.cancelados.ano2022.push(e);
-                if(month === 6) arrayMonth[6].clients.cancelados.ano2022.push(e);
-                if(month === 7) arrayMonth[7].clients.cancelados.ano2022.push(e);
-                if(month === 8) arrayMonth[8].clients.cancelados.ano2022.push(e);
-                if(month === 9) arrayMonth[9].clients.cancelados.ano2022.push(e);
-                if(month === 10) arrayMonth[10].clients.cancelados.ano2022.push(e);
-                if(month === 11) arrayMonth[11].clients.cancelados.ano2022.push(e);
+                arrayMonth[month].clients.cancelados.ano2022.push(e);
             } else if (this.statusCancelado.includes(e.status) && year === 2023) {
-                if(month === 0) arrayMonth[0].clients.cancelados.ano2023.push(e);
-                if(month === 1) arrayMonth[1].clients.cancelados.ano2023.push(e);
-                if(month === 2) arrayMonth[2].clients.cancelados.ano2023.push(e);
-                if(month === 3) arrayMonth[3].clients.cancelados.ano2023.push(e);
-                if(month === 4) arrayMonth[4].clients.cancelados.ano2023.push(e);
-                if(month === 5) arrayMonth[5].clients.cancelados.ano2023.push(e);
-                if(month === 6) arrayMonth[6].clients.cancelados.ano2023.push(e);
-                if(month === 7) arrayMonth[7].clients.cancelados.ano2023.push(e);
-                if(month === 8) arrayMonth[8].clients.cancelados.ano2023.push(e);
-                if(month === 9) arrayMonth[9].clients.cancelados.ano2023.push(e);
-                if(month === 10) arrayMonth[10].clients.cancelados.ano2023.push(e);
-                if(month === 11) arrayMonth[11].clients.cancelados.ano2023.push(e);
+                arrayMonth[month].clients.cancelados.ano2023.push(e);
             }
         });
 

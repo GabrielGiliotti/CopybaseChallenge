@@ -43,3 +43,19 @@ Para executar a API em um container docker, acesse o diretório ```Backend``` vi
 Para build do projeto: ```docker build -t nestjs-api .```
 
 Para executar o projeto no container: ```docker run --name nest-api -d -p 3000:3000 nestjs-api```
+
+## Pontos para melhorias
+
+### Frontend
+
+* Não é possível limpar o component de upload e selecionar o último arquivo previamente selecionado
+* Após limpar um primeiro arquivo e ralizar o upload de um segundo, é necessário trocar de abas clicando em um dos botões dos charts para que os dados sejam atualizados
+* Tornar components responsivos para se adaptarem a qualquer dispositivo
+* 
+
+### Backend
+
+* Acrescentar um banco de dados para armazenar dados calculados
+* Separar Classes que estão em um mesmo arquivo model
+* Revisar construção dos jsons retornados nos endpoints
+* Acresecentar outras métricas
