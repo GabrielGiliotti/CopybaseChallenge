@@ -1,7 +1,7 @@
 <script lang="ts">
 import { ref } from "vue";
+import { doRequest } from "../http/index";
 import type { ISelectedFile } from "../interfaces/ISelectedFile";
-import { doRequest } from "../operacoes/fetchData";
 
 const url = 'http://localhost:3000/metricas/';
 

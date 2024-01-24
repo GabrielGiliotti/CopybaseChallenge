@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Bar } from 'vue-chartjs'
   import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-  import { doRequest } from "../operacoes/fetchData";
+  import { doRequest } from "../http/index";
 
   const url = 'http://localhost:3000/metricas/';
 

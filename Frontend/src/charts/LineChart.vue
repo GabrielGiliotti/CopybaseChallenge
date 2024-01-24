@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { doRequest } from "../operacoes/fetchData";
+  import { doRequest } from "../http/index";
   
   const url = 'http://localhost:3000/metricas/';
 

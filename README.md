@@ -12,7 +12,19 @@ Todos os comandos a seguir pressupõem que o repositório ja foi clonado ou baix
 
 ## Frontend
 
+Primeiro, acesse o diretório ```Frontend``` via terminal ou prompt de comando e execute o comando de instalação das dependencias do projeto.
+
+```npm i``` ou ```npm install```
+
+Após a instalação das dependencias, execute o comando ```npm run dev``` e a API ficará disponível em ```http://localhost:5173```.
+
 ### Docker Frontend
+
+Para executar o App em um container docker, acesse o diretório ```Frontend``` via terminal e execute os comandos a seguir.
+
+Para build do projeto: ```docker build -t vuejs-app .```
+
+Para executar o projeto no container: ```docker run --name nest-api -d -p 3000:3000 nestjs-api```
 
 ## Backend
 
