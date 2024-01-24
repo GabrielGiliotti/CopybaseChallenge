@@ -162,6 +162,9 @@ export class ProcessDataService {
             arrayMonth.push(month);
             i++;
         }
+
+        const statusAtivo = ['Ativa', 'Atrasada', 'Upgrade'];
+        const statusCancelado = ['Cancelada', 'Trial cancelado']
                 
         array.forEach(e => {
 
@@ -170,7 +173,7 @@ export class ProcessDataService {
             const month = date.getMonth();
             const year = date.getFullYear();
 
-            if (e.status === "Ativa" && year === 2022) {
+            if (statusAtivo.includes(e.status) && year === 2022) {
                 if(month === 0) arrayMonth[0].clients.ativos.ano2022.push(e);
                 if(month === 1) arrayMonth[1].clients.ativos.ano2022.push(e);
                 if(month === 2) arrayMonth[2].clients.ativos.ano2022.push(e);
@@ -183,7 +186,7 @@ export class ProcessDataService {
                 if(month === 9) arrayMonth[9].clients.ativos.ano2022.push(e);
                 if(month === 10) arrayMonth[10].clients.ativos.ano2022.push(e);
                 if(month === 11) arrayMonth[11].clients.ativos.ano2022.push(e);
-            } else if (e.status === "Ativa" && year === 2023) {
+            } else if (statusAtivo.includes(e.status) && year === 2023) {
                 if(month === 0) arrayMonth[0].clients.ativos.ano2023.push(e);
                 if(month === 1) arrayMonth[1].clients.ativos.ano2023.push(e);
                 if(month === 2) arrayMonth[2].clients.ativos.ano2023.push(e);
@@ -196,7 +199,7 @@ export class ProcessDataService {
                 if(month === 9) arrayMonth[9].clients.ativos.ano2023.push(e);
                 if(month === 10) arrayMonth[10].clients.ativos.ano2023.push(e);
                 if(month === 11) arrayMonth[11].clients.ativos.ano2023.push(e);
-            } else if (e.status === "Cancelada" && year === 2022) {
+            } else if (statusCancelado.includes(e.status) && year === 2022) {
                 if(month === 0) arrayMonth[0].clients.cancelados.ano2022.push(e);
                 if(month === 1) arrayMonth[1].clients.cancelados.ano2022.push(e);
                 if(month === 2) arrayMonth[2].clients.cancelados.ano2022.push(e);
@@ -209,7 +212,7 @@ export class ProcessDataService {
                 if(month === 9) arrayMonth[9].clients.cancelados.ano2022.push(e);
                 if(month === 10) arrayMonth[10].clients.cancelados.ano2022.push(e);
                 if(month === 11) arrayMonth[11].clients.cancelados.ano2022.push(e);
-            } else if (e.status === "Cancelada" && year === 2023) {
+            } else if (statusCancelado.includes(e.status) && year === 2023) {
                 if(month === 0) arrayMonth[0].clients.cancelados.ano2023.push(e);
                 if(month === 1) arrayMonth[1].clients.cancelados.ano2023.push(e);
                 if(month === 2) arrayMonth[2].clients.cancelados.ano2023.push(e);
