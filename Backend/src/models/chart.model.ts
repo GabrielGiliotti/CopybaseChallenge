@@ -20,4 +20,9 @@ export class AtivosCancelados {
     ano2023: ClientModel[]
 }
 
+export class ChartedData {
+    labels: string[]
+    data: number[]
+} 
+
     

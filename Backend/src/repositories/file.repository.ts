@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { FaturamentoAnual } from 'src/models/faturamento.anual.model';
 import { ClientModel } from '../models/client.model';
 import { Injectable } from '@nestjs/common';
 
@@ -6,6 +7,9 @@ import { Injectable } from '@nestjs/common';
 export class FileRepository {
     private file: any
     private formattedJson: ClientModel[]
+    private faturamentoAnualAtivo: FaturamentoAnual;
+    private faturamentoAnualCancelado: FaturamentoAnual;
+
 
     async saveFile(file: any) {
         this.file = file;
@@ -15,6 +19,14 @@ export class FileRepository {
         this.formattedJson = json;
     }
 
+    async saveFaturamentoAnualAtivo(faturamento: FaturamentoAnual) {
+        this.faturamentoAnualAtivo = faturamento;
+    }
+
+    async saveFaturamentoAnualCancelado(faturamento: FaturamentoAnual) {
+        this.faturamentoAnualCancelado = faturamento;
+    }
+
     async getFile() {
         return this.file;
     }
@@ -22,4 +34,12 @@ export class FileRepository {
     async getJson() {
         return this.formattedJson;
     }    
+
+    async getFaturamentoAnualAtivo() {
+        return this.faturamentoAnualAtivo;
+    }  
+
+    async getFaturamentoAnualCancelado() {
+        return this.faturamentoAnualCancelado;
+    } 
 }
