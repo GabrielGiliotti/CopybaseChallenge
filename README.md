@@ -48,10 +48,9 @@ Para executar o projeto no container: ```docker run --name nest-api -d -p 3000:3
 
 ### Frontend
 
+* Tornar components responsivos para se adaptarem a qualquer dispositivo
 * Não é possível limpar o component de upload e selecionar o último arquivo previamente selecionado
 * Após limpar um primeiro arquivo e ralizar o upload de um segundo, é necessário trocar de abas clicando em um dos botões dos charts para que os dados sejam atualizados
-* Tornar components responsivos para se adaptarem a qualquer dispositivo
-* 
 
 ### Backend
 
