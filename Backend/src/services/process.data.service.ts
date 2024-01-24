@@ -82,15 +82,17 @@ export class ProcessDataService {
     }
 
     async sortArray(array: ClientModel[]) {
-        array.sort(function(a,b){
-            const d1 = new Date(a["data início"]);
-            const d2 = new Date(b["data início"]);
-
-            if(d1 > d2) return 1;
-            else if(d1 < d2) return -1;
-            else return 0;
-        });
-        return array;
+        if(array.length > 0) {
+            array.sort(function(a,b){
+                const d1 = new Date(a["data início"]);
+                const d2 = new Date(b["data início"]);
+    
+                if(d1 > d2) return 1;
+                else if(d1 < d2) return -1;
+                else return 0;
+            });
+            return array;
+        }
     }
 
     async filterByMonth(arrayMonth: ChartModel[], months: number, metric: string) {
