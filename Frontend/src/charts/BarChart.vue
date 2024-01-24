@@ -23,7 +23,7 @@
         chartData: {
           labels: [] as string[],
           datasets: [{
-            label: 'Monthly Recurring Revenue (MRR) - 2022 - em R$',
+            label: 'Monthly Recurring Revenue (MRR) - Ativos 2022 - em R$',
             data: [] as number[],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -64,7 +64,7 @@
         return this.chartData = { 
           labels: [] as string[],
           datasets: [{
-            label: 'Monthly Recurring Revenue (MRR) - 2022 - em R$',
+            label: 'Monthly Recurring Revenue (MRR) - Ativos 2022 - em R$',
             data: [] as number[],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
