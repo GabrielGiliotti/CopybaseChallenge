@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { FileRepository } from "../repositories/file.repository";
-import { AtivosCancelados, ChartModel, Clients } from "../models/chart.model";
+import { ChartModel } from "../models/chart.model";
 import { ClientModel } from "../models/client.model";
 import { Injectable } from '@nestjs/common';
 import { FaturamentoAnual } from "src/models/faturamento.anual.model";
@@ -34,8 +34,8 @@ export class ProcessDataService {
         const csv = fileBuffer.toString();
         const array = csv.toString().split("\r");
         const result = [] as ClientModel[];
-        const headers = array[0].split(", ")
-        
+        const headers = array[0].split(", ");
+
         for (let i = 1; i < array.length; i++) {
             const obj = new ClientModel();
         
@@ -73,7 +73,7 @@ export class ProcessDataService {
         const subsequentesAtivos = new FaturamentoAnual();
         const subsequentesCancelados = new FaturamentoAnual();
 
-        result.forEach(c => {
+        result.forEach(async c => {
             c.valor = c.valor.replace(",", ".");
 
             if(c['cobrada a cada X dias'] === "365") {
@@ -82,203 +82,26 @@ export class ProcessDataService {
                 const date = new Date(c["data início"]);
                 const month = date.getMonth();
 
-                if(!this.statusCancelado.includes(c.status)) {
-                    if(month === 0) {
-                        subsequentesAtivos.jan += valorMensal;
-                        subsequentesAtivos.fev += valorMensal;
-                        subsequentesAtivos.mar += valorMensal;
-                        subsequentesAtivos.abr += valorMensal;
-                        subsequentesAtivos.mai += valorMensal;
-                        subsequentesAtivos.jun += valorMensal;
-                        subsequentesAtivos.jul += valorMensal;
-                        subsequentesAtivos.ago += valorMensal;
-                        subsequentesAtivos.set += valorMensal;
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 1) {
-                        subsequentesAtivos.fev += valorMensal;
-                        subsequentesAtivos.mar += valorMensal;
-                        subsequentesAtivos.abr += valorMensal;
-                        subsequentesAtivos.mai += valorMensal;
-                        subsequentesAtivos.jun += valorMensal;
-                        subsequentesAtivos.jul += valorMensal;
-                        subsequentesAtivos.ago += valorMensal;
-                        subsequentesAtivos.set += valorMensal;
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 2) {
-                        subsequentesAtivos.mar += valorMensal;
-                        subsequentesAtivos.abr += valorMensal;
-                        subsequentesAtivos.mai += valorMensal;
-                        subsequentesAtivos.jun += valorMensal;
-                        subsequentesAtivos.jul += valorMensal;
-                        subsequentesAtivos.ago += valorMensal;
-                        subsequentesAtivos.set += valorMensal;
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 3) {
-                        subsequentesAtivos.abr += valorMensal;
-                        subsequentesAtivos.mai += valorMensal;
-                        subsequentesAtivos.jun += valorMensal;
-                        subsequentesAtivos.jul += valorMensal;
-                        subsequentesAtivos.ago += valorMensal;
-                        subsequentesAtivos.set += valorMensal;
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 4) {
-                        subsequentesAtivos.mai += valorMensal;
-                        subsequentesAtivos.jun += valorMensal;
-                        subsequentesAtivos.jul += valorMensal;
-                        subsequentesAtivos.ago += valorMensal;
-                        subsequentesAtivos.set += valorMensal;
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 5) {
-                        subsequentesAtivos.jun += valorMensal;
-                        subsequentesAtivos.jul += valorMensal;
-                        subsequentesAtivos.ago += valorMensal;
-                        subsequentesAtivos.set += valorMensal;
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 6) {
-                        subsequentesAtivos.jul += valorMensal;
-                        subsequentesAtivos.ago += valorMensal;
-                        subsequentesAtivos.set += valorMensal;
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 7) {
-                        subsequentesAtivos.ago += valorMensal;
-                        subsequentesAtivos.set += valorMensal;
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 8) {
-                        subsequentesAtivos.set += valorMensal;
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 9) {
-                        subsequentesAtivos.out += valorMensal;
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 10) {
-                        subsequentesAtivos.nov += valorMensal;
-                        subsequentesAtivos.dez += valorMensal;
-                    } else if (month === 11) {
-                        subsequentesAtivos.dez += valorMensal;
-                    } 
-                } else {
-                    if(month === 0) {
-                        subsequentesCancelados.jan += valorMensal;
-                        subsequentesCancelados.fev += valorMensal;
-                        subsequentesCancelados.mar += valorMensal;
-                        subsequentesCancelados.abr += valorMensal;
-                        subsequentesCancelados.mai += valorMensal;
-                        subsequentesCancelados.jun += valorMensal;
-                        subsequentesCancelados.jul += valorMensal;
-                        subsequentesCancelados.ago += valorMensal;
-                        subsequentesCancelados.set += valorMensal;
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 1) {
-                        subsequentesCancelados.fev += valorMensal;
-                        subsequentesCancelados.mar += valorMensal;
-                        subsequentesCancelados.abr += valorMensal;
-                        subsequentesCancelados.mai += valorMensal;
-                        subsequentesCancelados.jun += valorMensal;
-                        subsequentesCancelados.jul += valorMensal;
-                        subsequentesCancelados.ago += valorMensal;
-                        subsequentesCancelados.set += valorMensal;
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 2) {
-                        subsequentesCancelados.mar += valorMensal;
-                        subsequentesCancelados.abr += valorMensal;
-                        subsequentesCancelados.mai += valorMensal;
-                        subsequentesCancelados.jun += valorMensal;
-                        subsequentesCancelados.jul += valorMensal;
-                        subsequentesCancelados.ago += valorMensal;
-                        subsequentesCancelados.set += valorMensal;
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 3) {
-                        subsequentesCancelados.abr += valorMensal;
-                        subsequentesCancelados.mai += valorMensal;
-                        subsequentesCancelados.jun += valorMensal;
-                        subsequentesCancelados.jul += valorMensal;
-                        subsequentesCancelados.ago += valorMensal;
-                        subsequentesCancelados.set += valorMensal;
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 4) {
-                        subsequentesCancelados.mai += valorMensal;
-                        subsequentesCancelados.jun += valorMensal;
-                        subsequentesCancelados.jul += valorMensal;
-                        subsequentesCancelados.ago += valorMensal;
-                        subsequentesCancelados.set += valorMensal;
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 5) {
-                        subsequentesCancelados.jun += valorMensal;
-                        subsequentesCancelados.jul += valorMensal;
-                        subsequentesCancelados.ago += valorMensal;
-                        subsequentesCancelados.set += valorMensal;
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 6) {
-                        subsequentesCancelados.jul += valorMensal;
-                        subsequentesCancelados.ago += valorMensal;
-                        subsequentesCancelados.set += valorMensal;
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 7) {
-                        subsequentesCancelados.ago += valorMensal;
-                        subsequentesCancelados.set += valorMensal;
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 8) {
-                        subsequentesCancelados.set += valorMensal;
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 9) {
-                        subsequentesCancelados.out += valorMensal;
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 10) {
-                        subsequentesCancelados.nov += valorMensal;
-                        subsequentesCancelados.dez += valorMensal;
-                    } else if (month === 11) {
-                        subsequentesCancelados.dez += valorMensal;
-                    } 
-                }
+                const count = 11;
+                const months = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
 
+                if(!this.statusCancelado.includes(c.status)) {
+                    for(let i = month; i <= count; i++) {
+                        subsequentesAtivos[months[i]] += valorMensal;
+                    }
+                } else {
+                    for(let i = month; i <= count; i++) {
+                        subsequentesCancelados[months[i]] += valorMensal;
+                    }
+                }
                 c.valorMensal = null; // Clientes com plano anual tem seu valor mensal nulo
                                       // pois ja estamos contabilizando para todos os meses
                                       // a partir da data de inicio no objeto Faturamento Anual
 
-            } else if(c['cobrada a cada X dias'] === "30") {
+            } else if (c['cobrada a cada X dias'] === "30") {
                 c.valorMensal = Number(parseFloat(c.valor).toFixed(2));
             }
         });
-
-        console.log(subsequentesAtivos)
-        console.log(subsequentesCancelados)
 
         this.fileRepository.saveFaturamentoAnualAtivo(subsequentesAtivos);
         this.fileRepository.saveFaturamentoAnualCancelado(subsequentesCancelados);
@@ -363,16 +186,6 @@ export class ProcessDataService {
         while(i < 12) {
             const month = new ChartModel();
             month.month = monthName[i];
-            month.mrr = 0;
-            month.customerChurnRate = 0;
-            month.revenueChurnRate = 0;
-            month.clients = new Clients();
-            month.clients.ativos = new AtivosCancelados();
-            month.clients.ativos.ano2022 = new Array<ClientModel>();
-            month.clients.ativos.ano2023 = new Array<ClientModel>();
-            month.clients.cancelados = new AtivosCancelados();
-            month.clients.cancelados.ano2022 = new Array<ClientModel>();
-            month.clients.cancelados.ano2023 = new Array<ClientModel>();
             arrayMonth.push(month);
             i++;
         }

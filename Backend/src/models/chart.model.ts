@@ -3,26 +3,26 @@
 import { ClientModel } from "./client.model";
 
 export class ChartModel {
-    month: string
-    clients: Clients
-    mrr: number
-    customerChurnRate: number
-    revenueChurnRate: number
+    month: string = ""
+    clients: Clients = new Clients()
+    mrr: number = 0
+    customerChurnRate: number = 0
+    revenueChurnRate: number = 0
 }
 
-export class Clients {
-    ativos: AtivosCancelados
-    cancelados: AtivosCancelados
+class Clients {
+    ativos: AtivosCancelados = new AtivosCancelados()
+    cancelados: AtivosCancelados = new AtivosCancelados()
 }
 
-export class AtivosCancelados {
-    ano2022: ClientModel[]
-    ano2023: ClientModel[]
+class AtivosCancelados {
+    ano2022: ClientModel[] = []
+    ano2023: ClientModel[] = []
 }
 
 export class ChartedData {
-    labels: string[]
-    data: number[]
+    labels: string[] = []
+    data: number[] = []
 } 
 
     
