@@ -26,6 +26,6 @@ Após a instalação das dependencias, execute o comando ```npm run start:dev```
 
 Para executar a API em um container docker, acesse o diretório ```Backend``` via terminal e execute os comandos a seguir.
 
-Para build do projeto: ```docker build -t nestjs-app .```
+Para build do projeto: ```docker build -t nestjs-api .```
 
-Para executar o projeto: ```docker run --rm -p 3000:3000 nestjs-app```
+Para executar o projeto no container: ```docker run --name nest-api -d -p 3000:3000 nestjs-api```
