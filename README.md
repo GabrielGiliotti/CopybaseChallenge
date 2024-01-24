@@ -6,9 +6,12 @@ Pré-requisitos: Ter o ambiente ```Node.js``` previamente instalado.
 
 Frameworks/bibliotecas principais:
 
-```Vue.js    (Frontend)```
-```Charts.js (Frontend)```
-```Nest.js   (Backend)```
+```Vue.js    (Frontend)```  
+
+```Charts.js (Frontend)```  
+
+```Nest.js   (Backend)```  
+
 
 ## Frontend
 
