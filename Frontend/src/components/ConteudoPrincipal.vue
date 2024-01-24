@@ -1,6 +1,6 @@
 <script lang="ts">
-    import BarChart from './BarChart.vue';
-    import LineChart from './LineChart.vue';
+    import BarChart from '../charts/BarChart.vue';
+    import LineChart from '../charts/LineChart.vue';
 
     export default {
       
