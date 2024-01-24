@@ -6,7 +6,8 @@ export class ChartModel {
     month: string
     clients: Clients
     mrr: number
-    churnRate: number
+    customerChurnRate: number
+    revenueChurnRate: number
 }
 
 export class Clients {

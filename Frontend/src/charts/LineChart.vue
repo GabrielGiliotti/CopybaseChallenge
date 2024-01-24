@@ -40,31 +40,58 @@
         control: true,
         chartData: {
           labels: [] as string[],
-          datasets: [{
-            axis: 'y',
-            label: 'Monthly Churn Rate (%) - 2022',
-            data: [] as number[],
-            fill: false,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 205, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-              'rgb(255, 99, 132)',
-              'rgb(255, 159, 64)',
-              'rgb(255, 205, 86)',
-              'rgb(75, 192, 192)',
-              'rgb(54, 162, 235)',
-              'rgb(153, 102, 255)',
-              'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-          }]
+          datasets: [
+            {
+              axis: 'y',
+              label: 'Monthly Churn Rate (%) - 2022',
+              data: [] as number[],
+              fill: false,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+              ],
+              borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+              ],
+              borderWidth: 1
+            },
+            {
+              axis: 'y',
+              label: 'Monthly Churn Rate (%) - 2022',
+              data: [] as number[],
+              fill: false,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+              ],
+              borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+              ],
+              borderWidth: 1
+            }
+          ]
         },
         chartOptions: {
           responsive: true,
@@ -83,31 +110,58 @@
       async resetChartData() {
         return this.chartData = {
           labels: [] as string[],
-          datasets: [{
-            axis: 'y',
-            label: 'Monthly Churn Rate (%) - 2022',
-            data: [] as number[],
-            fill: false,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 205, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-              'rgb(255, 99, 132)',
-              'rgb(255, 159, 64)',
-              'rgb(255, 205, 86)',
-              'rgb(75, 192, 192)',
-              'rgb(54, 162, 235)',
-              'rgb(153, 102, 255)',
-              'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-          }]
+          datasets: [
+            {
+              axis: 'y',
+              label: 'Monthly Customer Churn Rate (%) - 2022',
+              data: [] as number[],
+              fill: false,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+              ],
+              borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+              ],
+              borderWidth: 1
+            },
+            {
+              axis: 'y2',
+              label: 'Monthly Revenue Churn Rate (%) - 2022',
+              data: [] as number[],
+              fill: false,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+              ],
+              borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+              ],
+              borderWidth: 1
+            }
+          ]
         }
       },
 
@@ -117,11 +171,13 @@
 
         const headers = { 'Access-Control-Allow-Origin': '*' };
 
-        const resultChurn = await doRequest(url + "churn-rate", "GET", headers, queryValue, null);
+        const resultCustomerChurn = await doRequest(url + "customer-churn-rate", "GET", headers, queryValue, null);
+        const resultRevenueChurn = await doRequest(url + "revenue-churn-rate", "GET", headers, queryValue, null);
 
         setTimeout(() => {
-          this.chartData.labels = resultChurn.labels;
-          this.chartData.datasets[0].data = resultChurn.data;
+          this.chartData.labels = resultCustomerChurn.labels; // Label é o mesmo para ambos
+          this.chartData.datasets[0].data = resultCustomerChurn.data;
+          this.chartData.datasets[1].data = resultRevenueChurn.data;
         }, 250);
       },
     }
@@ -144,13 +200,13 @@
           Churn Rate 12 Meses 
       </button>
     </div>
-    <br>
     <div v-if="chartData.datasets[0].data.length" class="wrapper"> 
       <Line :options="chartOptions"
             :data="chartData"/>
       <br>
       <div>
-        * Churn Rate acima de 100% indica que houveram mais cancelamentos que usuarios ativos
+        * Customer Churn Rate >= 100%: indica que houveram mais cancelamentos que ativos <br>
+        * Revenue Churn Rate >= 100%: indica que houveram mais gastos que ganhos
       </div>
     </div>
     <div v-else-if="control">

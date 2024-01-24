@@ -104,8 +104,10 @@ export class ProcessDataService {
             chartedData.labels.push(m.month);
             if(metric === 'mrr') 
                 chartedData.data.push(m.mrr);
-            if(metric === 'churn') 
-                chartedData.data.push(m.churnRate);
+            else if(metric === 'customer-churn') 
+                chartedData.data.push(m.customerChurnRate);
+            else if(metric === 'revenue-churn') 
+                chartedData.data.push(m.revenueChurnRate);
         });
 
         if(months <= 3) {
@@ -146,7 +148,8 @@ export class ProcessDataService {
             const month = new ChartModel();
             month.month = monthName[i];
             month.mrr = 0;
-            month.churnRate = 0;
+            month.customerChurnRate = 0;
+            month.revenueChurnRate = 0;
             month.clients = new Clients();
             month.clients.ativos = new AtivosCancelados();
             month.clients.ativos.ano2022 = new Array<ClientModel>();

@@ -46,17 +46,42 @@ export class MetricasController {
         return await this.processDataService.filterByMonth(arrayMonth, months, 'mrr');
     }
 
-    @Get('churn-rate')
-    async metricaChurnRate(@Query('months') months: number) {
+    @Get('customer-churn-rate')
+    async metricaCustomerChurnRate(@Query('months') months: number) {
 
         const arrayMonth = await this.processDataService.preProcessingData();
 
-        // Calculo Churn Rate
+        // Calculo Customer Churn Rate
         arrayMonth.forEach(m => {
             const churn = m.clients.cancelados.ano2022.length / m.clients.ativos.ano2022.length;
-            m.churnRate = Number((churn * 100).toFixed(2));
+            m.customerChurnRate = Number((churn * 100).toFixed(2));
         });
 
-        return await this.processDataService.filterByMonth(arrayMonth, months, 'churn');
+        return await this.processDataService.filterByMonth(arrayMonth, months, 'customer-churn');
+    }
+
+    @Get('revenue-churn-rate')
+    async metricaRevenueChurnRate(@Query('months') months: number) {
+
+        const arrayMonth = await this.processDataService.preProcessingData();
+
+        // Calculo Revenue Churn Rate
+        arrayMonth.forEach(m => {
+            let currentRevenue = 0;
+            let lostRevenue = 0;
+
+            m.clients.ativos.ano2022.forEach(c => {
+                currentRevenue += c.valorMensal;
+            });
+
+            m.clients.cancelados.ano2022.forEach(c => {
+                lostRevenue += c.valorMensal;
+            });
+
+            const churn = lostRevenue / currentRevenue;
+            m.revenueChurnRate = Number((churn * 100).toFixed(2));
+        });
+
+        return await this.processDataService.filterByMonth(arrayMonth, months, 'revenue-churn');
     }
 }
