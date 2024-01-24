@@ -11,7 +11,6 @@
 
       data() {
         return {
-          showData: false,
           ingredientes: [] as string[]
         };
       },
@@ -24,11 +23,11 @@
     <main class="conteudo-principal">
         
         <section class="charts-template">
-          <BarChart :showData="showData" :showButtons="showButtons" :showCharts="showCharts"/>
+          <BarChart :showButtons="showButtons" :showCharts="showCharts"/>
           <br>
           <div class="hr"></div>
           <br>
-          <LineChart :showData="showData" :showButtons="showButtons" :showCharts="showCharts"/>
+          <LineChart :showButtons="showButtons" :showCharts="showCharts"/>
         </section>
 
     </main>

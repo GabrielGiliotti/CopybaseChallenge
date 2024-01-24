@@ -13,7 +13,6 @@
     components: { Bar },
     
     props: {
-      showData: { type: Boolean },
       showButtons: { type: Boolean },
       showCharts: { type: Boolean },
     },
@@ -108,7 +107,7 @@
 </script>
 
 <template>
-  <div class="borda-geral">
+  <div class="borda-geral" :style="[!showButtons ? {'min-height':'100px'} : {'min-height': '600px'}]">
     <div class="buttons">
       <button class="button" :disabled='!showButtons' @click="updateChartData(3)" >
           MRR 3 Meses 
@@ -150,6 +149,7 @@
   display: flex;
   gap: 1rem;
   background-color: white;
+  min-height: 800px;
 }
 
 .wrapper {  

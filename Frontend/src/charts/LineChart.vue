@@ -31,7 +31,6 @@
     components: { Line },
     
     props: {
-      showData: { type: Boolean },
       showButtons: { type: Boolean },
       showCharts: { type: Boolean },
     },
@@ -130,7 +129,7 @@
 </script>
 
 <template>
-  <div class="borda-geral">
+  <div class="borda-geral" :style="[!showButtons ? {'min-height':'100px'} : {'min-height': '650px'}]">
     <div class="buttons">
       <button class="button" :disabled='!showButtons' @click="updateChartData(3)" >
           Churn Rate 3 Meses 
