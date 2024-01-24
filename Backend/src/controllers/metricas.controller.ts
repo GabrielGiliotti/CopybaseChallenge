@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-
 import { Controller, Get, HttpStatus, ParseFilePipeBuilder, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ProcessDataService } from "../services/process.data.service";
@@ -9,7 +8,7 @@ const MAX_FILE_SIZE_IN_BYTES = 2 * 1024 * 1024;
 @Controller('/metricas')
 export class MetricasController {
 
-    private processData = new ProcessDataService();
+    constructor(private readonly processDataService: ProcessDataService) {}
 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
@@ -21,8 +20,8 @@ export class MetricasController {
     ) file: Express.Multer.File) {
         
         try {
-            this.processData.saveFile(file);
-            const result = await this.processData.buildJson(file.buffer);
+            await this.processDataService.saveFile(file);
+            const result = await this.processDataService.buildJson(file.buffer);
             return { message: 'Arquivo salvo com sucesso na memoria', file: result, status: 200 };
         }
         catch {
@@ -33,7 +32,7 @@ export class MetricasController {
     @Get('mrr')
     async metricaMRR(@Query('months') months: number) {
 
-        const arrayMonth = await this.processData.preProcessingData();
+        const arrayMonth = await this.processDataService.preProcessingData();
 
         // Calcula MRR
         arrayMonth.forEach(m => {
@@ -44,13 +43,13 @@ export class MetricasController {
             m.mrr = Number((receitaMensalTotal).toFixed(2));
         });
 
-        return await this.processData.filterByMonth(arrayMonth, months, 'mrr');
+        return await this.processDataService.filterByMonth(arrayMonth, months, 'mrr');
     }
 
     @Get('churn-rate')
     async metricaChurnRate(@Query('months') months: number) {
 
-        const arrayMonth = await this.processData.preProcessingData();
+        const arrayMonth = await this.processDataService.preProcessingData();
 
         // Calculo Churn Rate
         arrayMonth.forEach(m => {
@@ -58,6 +57,6 @@ export class MetricasController {
             m.churnRate = Number((churn * 100).toFixed(2));
         });
 
-        return await this.processData.filterByMonth(arrayMonth, months, 'churn');
+        return await this.processDataService.filterByMonth(arrayMonth, months, 'churn');
     }
 }

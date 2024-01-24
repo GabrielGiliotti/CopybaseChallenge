@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { ClientModel } from '../models/client.model';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class FileRepository {
     private file: any
     private formattedJson: ClientModel[]

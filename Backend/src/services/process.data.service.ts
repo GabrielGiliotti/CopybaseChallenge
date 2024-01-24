@@ -2,10 +2,16 @@
 import { FileRepository } from "../repositories/file.repository";
 import { AtivosCancelados, ChartModel, Clients } from "../models/chart.model";
 import { ClientModel } from "../models/client.model";
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class ProcessDataService {
     
-    public fileRepository = new FileRepository();
+    constructor(private readonly fileRepository: FileRepository) {}
+
+    async getDefaultPage(): Promise<string> {
+        return 'Nest.js API';
+    }
 
     async saveFile(file: any) {
         return this.fileRepository.saveFile(file);
@@ -66,7 +72,6 @@ export class ProcessDataService {
         return result;
     }
 
-    // Colocar Service
     async preProcessingData() {
         
         const array = await this.fileRepository.getJson();
