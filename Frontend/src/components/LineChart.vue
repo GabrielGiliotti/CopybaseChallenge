@@ -1,6 +1,4 @@
 <script lang="ts">
-  import type IMetricsData from '@/interfaces/IMetricsData';
-  import type { PropType } from 'vue';
   import { doRequest } from "../operacoes/fetchData";
   
   const url = 'http://localhost:3000/metricas/';
@@ -33,13 +31,14 @@
     components: { Line },
     
     props: {
-      churnData: { type: Object as PropType<IMetricsData> },
       showData: { type: Boolean },
-      showButtons: { type: Boolean }
+      showButtons: { type: Boolean },
+      showCharts: { type: Boolean },
     },
 
     data() {
       return {
+        control: true,
         chartData: {
           labels: [] as string[],
           datasets: [{
@@ -71,6 +70,13 @@
         chartOptions: {
           responsive: true,
         },
+      }
+    },
+
+    watch: {
+      showCharts: function() {
+        this.updateChartData(6);
+        this.control = false;
       }
     },
      
@@ -112,11 +118,13 @@
 
         const headers = { 'Access-Control-Allow-Origin': '*' };
 
-        const resultMRR = await doRequest(url + "churn-rate", "GET", headers, queryValue, null);
+        const resultChurn = await doRequest(url + "churn-rate", "GET", headers, queryValue, null);
 
-        this.chartData.labels = resultMRR.labels;
-        this.chartData.datasets[0].data = resultMRR.data;
-      }
+        setTimeout(() => {
+          this.chartData.labels = resultChurn.labels;
+          this.chartData.datasets[0].data = resultChurn.data;
+        }, 250);
+      },
     }
   }
 </script>
@@ -146,7 +154,7 @@
         * Churn Rate acima de 100% indica que houveram mais cancelamentos que usuarios ativos
       </div>
     </div>
-    <div v-else>
+    <div v-else-if="control">
       Grafico de <strong>Linhas</strong>
     </div>
 

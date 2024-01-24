@@ -73,9 +73,10 @@ export default {
 
         setTimeout(() => {
           this.message = "";
-        }, 5000);
+        }, 4000);
 
         this.$emit('calculatedMetrics', true);
+        this.$emit('showCharts', true);
 
       } catch (error) {
         console.error(error);
@@ -83,7 +84,7 @@ export default {
     },  
   },
   
-  emits: ['calculatedMetrics']
+  emits: ['calculatedMetrics', 'showCharts']
 }
 </script>
 
@@ -105,7 +106,7 @@ export default {
       />
       <div class="hr" v-if="selectedFiles.length"></div>
       <!-- Buttons -->
-      <div class="buttons" :class="{ centered: selectedFiles.length === 0 }">
+      <div class="buttons" :class="{ centered: true }">
         <label
           class="button"
           :class="{ disabled: isUploading }"

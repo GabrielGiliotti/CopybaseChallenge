@@ -15,10 +15,12 @@
     props: {
       showData: { type: Boolean },
       showButtons: { type: Boolean },
+      showCharts: { type: Boolean },
     },
 
     data() {
       return {
+        control: true,
         chartData: {
           labels: [] as string[],
           datasets: [{
@@ -48,6 +50,13 @@
         chartOptions: {
           responsive: true,
         },
+      }
+    },
+
+    watch: {
+      showCharts: function() {
+        this.updateChartData(6);
+        this.control = false;
       }
     },
      
@@ -89,8 +98,10 @@
 
         const resultMRR = await doRequest(url + "mrr", "GET", headers, queryValue, null);
 
-        this.chartData.labels = resultMRR.labels;
-        this.chartData.datasets[0].data = resultMRR.data;
+        setTimeout(() => {
+          this.chartData.labels = resultMRR.labels;
+          this.chartData.datasets[0].data = resultMRR.data;
+        }, 250);
       }
     }
   }
@@ -120,7 +131,7 @@
         * Cada assinante paga um valor diferente para seu serviço, logo MRR é a soma total do pagamento de cada assinante
       </div>
     </div>
-    <div v-else>
+    <div v-else-if="control">
       Grafico de <strong>Barras</strong>
     </div>
   </div>

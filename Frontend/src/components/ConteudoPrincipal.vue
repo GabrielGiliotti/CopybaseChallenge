@@ -5,7 +5,8 @@
     export default {
       
       props: {
-        showButtons: { type: Boolean }
+        showButtons: { type: Boolean },
+        showCharts: { type: Boolean }
       },
 
       data() {
@@ -23,11 +24,11 @@
     <main class="conteudo-principal">
         
         <section class="charts-template">
-          <BarChart :showData="showData" :showButtons="showButtons"/>
+          <BarChart :showData="showData" :showButtons="showButtons" :showCharts="showCharts"/>
           <br>
           <div class="hr"></div>
           <br>
-          <LineChart :showData="showData" :showButtons="showButtons"/>
+          <LineChart :showData="showData" :showButtons="showButtons" :showCharts="showCharts"/>
         </section>
 
     </main>
