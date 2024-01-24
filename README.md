@@ -24,7 +24,9 @@ Para executar o App em um container docker, acesse o diretório ```Frontend``` v
 
 Para build do projeto: ```docker build -t vuejs-app .```
 
-Para executar o projeto no container: ```docker run --name nest-api -d -p 3000:3000 nestjs-api```
+Para executar o projeto no container: ```docker run --name vue-app -d -p 8080:8080 vuejs-app```
+
+Após execução dos comandos, abra seu navegador e digite no campo de url o endereço ```http://localhost:8080```
 
 ## Backend
 
